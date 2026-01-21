@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gemcraft (젬크래프트)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            overflow: hidden;
+            touch-action: none;
+        }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+
+        /* Isometric Board View */
+        .board-perspective {
+            perspective: 1000px;
+        }
+        .board-tilt {
+            transform: rotateX(15deg);
+            transform-style: preserve-3d;
+        }
+
+        /* Gem Facet Clipping */
+        .shape-ruby { clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
+        .shape-sapphire { clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); border-radius: 40%; }
+        .shape-emerald { clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%); }
+
+        /* Title Shine Animation - Golden Luxury */
+        @keyframes title-shine {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .animate-title-shine {
+            background: linear-gradient(90deg, #b45309 0%, #fcd34d 25%, #fffbeb 50%, #fcd34d 75%, #b45309 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: title-shine 4s linear infinite;
+        }
+
+        /* Glint sweep for engines */
+        @keyframes glint {
+            0% { transform: translateX(-150%) skewX(-25deg); }
+            40%, 100% { transform: translateX(150%) skewX(-25deg); }
+        }
+        .glint-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .glint-container::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 60%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            animation: glint 3s infinite;
+            pointer-events: none;
+        }
+
+        /* Triple Merge ascension */
+        @keyframes gem-ascend {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-40px) scale(1.2); }
+            100% { transform: translateY(0) scale(1); }
+        }
+        .animate-ascend { animation: gem-ascend 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        @keyframes light-column {
+            0% { height: 0; opacity: 0; transform: scaleX(0.5); }
+            30% { height: 300px; opacity: 0.8; transform: scaleX(1.2); }
+            100% { height: 500px; opacity: 0; transform: scaleX(0.1); }
+        }
+        .light-column {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            width: 40px;
+            background: linear-gradient(to top, white, transparent);
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 50;
+            filter: blur(8px);
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 1; }
+        }
+        .sparkle-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: sparkle 1.5s infinite;
+        }
+
+        /* Stage Up Toast Animation */
+        @keyframes stage-toast {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            15% { opacity: 1; transform: scale(1) translateY(0); }
+            85% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(1.1) translateY(-20px); }
+        }
+        .animate-stage-toast {
+            animation: stage-toast 1.2s ease-in-out forwards;
+        }
+
+        /* Engine Icon Rotation */
+        @keyframes gem-rotate {
+            from { transform: rotateY(0deg) rotateX(10deg); }
+            to { transform: rotateY(360deg) rotateX(10deg); }
+        }
+        .engine-gem-active {
+            animation: gem-rotate 4s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        /* Generic float */
+        @keyframes float-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .float-subtle { animation: float-subtle 3s ease-in-out infinite; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
